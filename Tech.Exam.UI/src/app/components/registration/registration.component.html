@@ -13,7 +13,7 @@
           name="name" 
           [(ngModel)]="name" required>
           <div class="invalid-feedback" *ngIf="nameModel.invalid && (nameModel.touched || clientForm.submitted)">
-            El nombre es obligatorio.
+            the name is required.
           </div>
         </div>
 
@@ -29,7 +29,7 @@
           [(ngModel)]="firstName"
           required>
           <div class="invalid-feedback" *ngIf="firstNameModel.invalid && (firstNameModel.touched || clientForm.submitted)">
-            El primer nombre es obligatorio.
+            the first name is required.
           </div>
         </div>
 
@@ -45,7 +45,7 @@
           [(ngModel)]="lastName"
           required>
           <div class="invalid-feedback" *ngIf="lastNameModel.invalid && (lastNameModel.touched || clientForm.submitted)">
-            El apellido es obligatorio.
+            the last name is required.
           </div>
         </div>
 
@@ -63,10 +63,10 @@
           pattern="^[0-9]+$"
           required>
           <div class="invalid-feedback" *ngIf="phoneModel.errors?.['required'] && (phoneModel.touched || clientForm.submitted)">
-            El teléfono es obligatorio.
+            the phone number is required.
           </div>
           <div class="invalid-feedback" *ngIf="phoneModel.errors?.['pattern'] && (phoneModel.touched || clientForm.submitted)">
-            El teléfono solo puede contener números.
+            the phone number can only contain digits.
           </div>
         </div>
 
@@ -83,10 +83,10 @@
           required
           email>
           <div class="invalid-feedback" *ngIf="emailModel.errors?.['required'] && (emailModel.touched || clientForm.submitted)">
-            El correo electrónico es obligatorio.
+            the email is required.
           </div>
           <div class="invalid-feedback" *ngIf="emailModel.errors?.['email'] && (emailModel.touched || clientForm.submitted)">
-            Ingresa un correo electrónico válido.
+            please enter a valid email address.
           </div>
         </div>
 
@@ -104,8 +104,8 @@
       <input
         type="text"
         class="form-control mb-3"
-        placeholder="Buscar en todos los campos..."
-        aria-label="Buscar clientes"
+        placeholder="Search Clients..."
+        aria-label="Client Search"
         [(ngModel)]="searchTerm"
         (ngModelChange)="onSearchInput($event)">
     </div>
@@ -132,8 +132,8 @@
                 <td><input type="email" class="form-control" [(ngModel)]="editing.email" [ngModelOptions]="{ standalone: true }" required email></td>
                 <td><input type="text" inputmode="numeric" class="form-control" [(ngModel)]="editing.phone" [ngModelOptions]="{ standalone: true }" required pattern="^[0-9]+$"></td>
                 <td class="text-nowrap">
-                  <button type="button" class="btn btn-success btn-sm me-2" (click)="saveEditedClient()" [disabled]="!isEditedClientValid()">Guardar</button>
-                  <button type="button" class="btn btn-secondary btn-sm" (click)="cancelEditClient()">Cancelar</button>
+                  <button type="button" class="btn btn-success btn-sm me-2" (click)="saveEditedClient()" [disabled]="!isEditedClientValid()">Save</button>
+                  <button type="button" class="btn btn-secondary btn-sm" (click)="cancelEditClient()">Cancel</button>
                 </td>
               </ng-container>
 
@@ -145,14 +145,14 @@
                 <td>{{ client.email }}</td>
                 <td>{{ client.phone }}</td>
                 <td class="text-nowrap">
-                  <button type="button" class="btn btn-primary btn-sm me-2" (click)="startEditClient(client)">Editar</button>
-                  <button type="button" class="btn btn-danger btn-sm" (click)="deleteClient(client.id)">Eliminar</button>
+                  <button type="button" class="btn btn-primary btn-sm me-2" (click)="startEditClient(client)">Edit</button>
+                  <button type="button" class="btn btn-danger btn-sm" (click)="deleteClient(client.id)">Delete</button>
                 </td>
               </ng-template>
           </tr>
           <tr *ngIf="filteredClients.length === 0">
               <td colspan="7" class="text-center">
-                {{ searchTerm ? 'No se encontraron clientes para la búsqueda.' : 'No hay clientes registrados.' }}
+                {{ searchTerm ? 'No clients found for the search.' : 'There are no registered clients.' }}
               </td>
           </tr>
       </tbody>

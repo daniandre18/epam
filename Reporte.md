@@ -52,7 +52,7 @@ Las tareas 1 a 7 están implementadas en la interfaz. En la tarea 8 se muestran 
 
 Utilicé GitHub Copilot para recibir asistencia al revisar el buscador y preparar la documentación de la solución. La implementación se mantuvo en los archivos del componente y su plantilla, y se revisó el comportamiento para filtrar localmente sin solicitar datos al servicio mientras se escribe.
 
-También para que me ayudara a subir al repo de GitHub y documentación 
+También para que me ayudara a subir al repo de GitHub y documentación correspondiente.
 
 ---
 

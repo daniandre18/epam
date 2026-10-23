@@ -85,7 +85,7 @@ export class RegistrationComponent {
     this.clientService.saveClient(client)
     .subscribe({
       next: (data: any) => {
-        alert("Cliente guardado correctamente.");
+        alert("Client saved successfully.");
         this.resetForm(form);
         this.getClients();
       }, error: (err) => console.log(err)
@@ -113,19 +113,19 @@ export class RegistrationComponent {
   }
   saveEditedClient(): void {
     if (!this.isEditedClientValid()) {
-      alert('Completa todos los campos con datos válidos antes de guardar.');
+      alert('Please complete all fields with valid data before saving.');
       return;
     }
 
     this.clientService.updateClient(this.editedClient!.id, this.editedClient!).subscribe({
       next: () => {
-        alert('Cliente actualizado correctamente.');
+        alert('Client updated successfully.');
         this.cancelEditClient();
         this.getClients();
       },
       error: (err) => {
         console.error(err);
-        alert('No fue posible actualizar el cliente.');
+        alert('Failed to update the client.');
       }
     });
   }
@@ -150,19 +150,19 @@ export class RegistrationComponent {
   }
 
   deleteClient(id: number): void {
-    if (!confirm('¿Deseas eliminar este cliente?')) {
+    if (!confirm('Do you want to delete this client?')) {
       return;
     }
 
     this.clientService.deleteClient(id)
       .subscribe({
         next: () => {
-          alert('Cliente eliminado correctamente.');
+          alert('Client deleted successfully.');
           this.getClients();
         },
         error: (err) => {
           console.error(err);
-          alert('No fue posible eliminar el cliente.');
+          alert('Failed to delete the client.');
         }
       });
   }
