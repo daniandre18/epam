@@ -1,0 +1,17 @@
+# Instrucciones del examen
+Examen.md
+
+# Angular
+Tech.Exam.UI/node_modules/
+Tech.Exam.UI/dist/
+Tech.Exam.UI/.angular/
+
+# .NET
+Tech.Exam.API/**/bin/
+Tech.Exam.API/**/obj/
+Tech.Exam.API/**/.vs/
+Tech.Exam.API/**/*.user
+
+# OS
+.DS_Store
+Thumbs.db

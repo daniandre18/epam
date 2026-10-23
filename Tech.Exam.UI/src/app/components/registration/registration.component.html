@@ -1,0 +1,160 @@
+<div class="container  pt-3  gap-3">
+    <form #clientForm="ngForm" (ngSubmit)="onSubmit(clientForm)" class="gap-3">
+      <div class="row g-3">
+
+        <div class="form-group">
+          <label for="name">Name:</label>
+          <input
+          #nameModel="ngModel" 
+          type="text" 
+          class="form-control" 
+          [class.is-invalid]="nameModel.invalid && (nameModel.touched || clientForm.submitted)"
+          id="name" 
+          name="name" 
+          [(ngModel)]="name" required>
+          <div class="invalid-feedback" *ngIf="nameModel.invalid && (nameModel.touched || clientForm.submitted)">
+            El nombre es obligatorio.
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label for="firstName">First Name:</label>
+          <input
+          #firstNameModel="ngModel"
+          type="text"
+          class="form-control"
+          [class.is-invalid]="firstNameModel.invalid && (firstNameModel.touched || clientForm.submitted)"
+          id="firstName"
+          name="firstName"
+          [(ngModel)]="firstName"
+          required>
+          <div class="invalid-feedback" *ngIf="firstNameModel.invalid && (firstNameModel.touched || clientForm.submitted)">
+            El primer nombre es obligatorio.
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label for="lastName">Last Name:</label>
+          <input
+          #lastNameModel="ngModel"
+          type="text"
+          class="form-control"
+          [class.is-invalid]="lastNameModel.invalid && (lastNameModel.touched || clientForm.submitted)"
+          id="lastName"
+          name="lastName"
+          [(ngModel)]="lastName"
+          required>
+          <div class="invalid-feedback" *ngIf="lastNameModel.invalid && (lastNameModel.touched || clientForm.submitted)">
+            El apellido es obligatorio.
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label for="phone">Phone:</label>
+          <input
+          #phoneModel="ngModel"
+          type="tel"
+          class="form-control"
+          [class.is-invalid]="phoneModel.invalid && (phoneModel.touched || clientForm.submitted)"
+          id="phone"
+          name="phone"
+          [(ngModel)]="phone"
+          inputmode="numeric"
+          pattern="^[0-9]+$"
+          required>
+          <div class="invalid-feedback" *ngIf="phoneModel.errors?.['required'] && (phoneModel.touched || clientForm.submitted)">
+            El teléfono es obligatorio.
+          </div>
+          <div class="invalid-feedback" *ngIf="phoneModel.errors?.['pattern'] && (phoneModel.touched || clientForm.submitted)">
+            El teléfono solo puede contener números.
+          </div>
+        </div>
+
+         <div class="form-group">
+          <label for="email">Email:</label>
+          <input
+          #emailModel="ngModel"
+          type="email"
+          class="form-control"
+          [class.is-invalid]="emailModel.invalid && (emailModel.touched || clientForm.submitted)"
+          id="email"
+          name="email"
+          [(ngModel)]="email"
+          required
+          email>
+          <div class="invalid-feedback" *ngIf="emailModel.errors?.['required'] && (emailModel.touched || clientForm.submitted)">
+            El correo electrónico es obligatorio.
+          </div>
+          <div class="invalid-feedback" *ngIf="emailModel.errors?.['email'] && (emailModel.touched || clientForm.submitted)">
+            Ingresa un correo electrónico válido.
+          </div>
+        </div>
+
+        <div class="col-4">
+          <button type="submit" class="btn btn-primary">Save</button>
+        </div>
+      </div>
+    </form>
+</div>
+
+<div class="container pt-3">
+  <div class="row">
+    <div class="col-12">
+      <h2>Client List</h2>
+      <input
+        type="text"
+        class="form-control mb-3"
+        placeholder="Buscar en todos los campos..."
+        aria-label="Buscar clientes"
+        [(ngModel)]="searchTerm"
+        (ngModelChange)="onSearchInput($event)">
+    </div>
+  </div>
+  <table class="table table-striped">
+      <thead>
+          <tr>
+              <th>Id</th>
+              <th>Name</th>
+              <th>First Name</th>
+              <th>Last Name</th>
+              <th>Email</th>
+              <th>Phone</th>
+              <th>Acciones</th>
+          </tr>
+      </thead>
+      <tbody>
+          <tr *ngFor="let client of filteredClients">
+              <ng-container *ngIf="editingClientId === client.id && editedClient as editing; else clientRow">
+                <td>{{ client.id }}</td>
+                <td><input class="form-control" [(ngModel)]="editing.name" [ngModelOptions]="{ standalone: true }" required></td>
+                <td><input class="form-control" [(ngModel)]="editing.firstName" [ngModelOptions]="{ standalone: true }" required></td>
+                <td><input class="form-control" [(ngModel)]="editing.lastName" [ngModelOptions]="{ standalone: true }" required></td>
+                <td><input type="email" class="form-control" [(ngModel)]="editing.email" [ngModelOptions]="{ standalone: true }" required email></td>
+                <td><input type="text" inputmode="numeric" class="form-control" [(ngModel)]="editing.phone" [ngModelOptions]="{ standalone: true }" required pattern="^[0-9]+$"></td>
+                <td class="text-nowrap">
+                  <button type="button" class="btn btn-success btn-sm me-2" (click)="saveEditedClient()" [disabled]="!isEditedClientValid()">Guardar</button>
+                  <button type="button" class="btn btn-secondary btn-sm" (click)="cancelEditClient()">Cancelar</button>
+                </td>
+              </ng-container>
+
+              <ng-template #clientRow>
+                <td>{{ client.id }}</td>
+                <td>{{ client.name }}</td>
+                <td>{{ client.firstName }}</td>
+                <td>{{ client.lastName }}</td>
+                <td>{{ client.email }}</td>
+                <td>{{ client.phone }}</td>
+                <td class="text-nowrap">
+                  <button type="button" class="btn btn-primary btn-sm me-2" (click)="startEditClient(client)">Editar</button>
+                  <button type="button" class="btn btn-danger btn-sm" (click)="deleteClient(client.id)">Eliminar</button>
+                </td>
+              </ng-template>
+          </tr>
+          <tr *ngIf="filteredClients.length === 0">
+              <td colspan="7" class="text-center">
+                {{ searchTerm ? 'No se encontraron clientes para la búsqueda.' : 'No hay clientes registrados.' }}
+              </td>
+          </tr>
+      </tbody>
+  </table>
+</div>
